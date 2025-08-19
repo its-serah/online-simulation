@@ -1,4 +1,8 @@
-# 🎮 TechSplore 2-25 Simulation Game
+# 🎮 TechSplore 2-25 Online Simulation Game
+
+🎯 **[Play the Game Live Here!](https://its-serah.github.io/online-simulation/)**
+
+📦 **Repository:** [github.com/its-serah/online-simulation](https://github.com/its-serah/online-simulation)
 
 ## 📝 How to Add Your Own Questions
 
