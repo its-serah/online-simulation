@@ -11,6 +11,7 @@ const gameState = {
     isGameOver: false,
     selectedCharacter: 'astronaut',
     selectedBackground: 'space',
+    selectedMusic: 'theme',
     currentQuestionIndex: 0,
     combo: 0,
     maxCombo: 0,
@@ -59,21 +60,21 @@ let ground = {
 
 // Power-up types
 const POWER_UP_TYPES = {
-    SHIELD: { icon: '🛡️', color: '#4FC3F7', duration: 5000 },
-    MAGNET: { icon: '🧲', color: '#9C27B0', duration: 7000 },
-    SPEED: { icon: '⚡', color: '#FFD700', duration: 4000 },
-    TRIPLE_JUMP: { icon: '🚀', color: '#FF6B6B', duration: 8000 },
-    COIN_MULTIPLIER: { icon: '💰', color: '#4CAF50', duration: 6000 }
+    SHIELD: { icon: 'shield', color: '#4FC3F7', duration: 5000 },
+    MAGNET: { icon: 'magnet', color: '#9C27B0', duration: 7000 },
+    SPEED: { icon: 'speed', color: '#FFD700', duration: 4000 },
+    TRIPLE_JUMP: { icon: 'triple_jump', color: '#FF6B6B', duration: 8000 },
+    COIN_MULTIPLIER: { icon: 'coin_multiplier', color: '#4CAF50', duration: 6000 }
 };
 
 // Achievements
 const ACHIEVEMENTS = {
-    FIRST_STAR: { name: 'Star Collector', desc: 'Collect your first star', icon: '⭐' },
-    COMBO_5: { name: 'Combo Master', desc: 'Get a 5x combo', icon: '🔥' },
-    PERFECT_10: { name: 'Perfect Runner', desc: '10 perfect jumps', icon: '💯' },
-    SURVIVOR: { name: 'Survivor', desc: 'Survive for 2 minutes', icon: '⏱️' },
-    RICH: { name: 'Coin Collector', desc: 'Collect 100 coins', icon: '💎' },
-    SPEEDSTER: { name: 'Speed Demon', desc: 'Use dash 20 times', icon: '💨' }
+    FIRST_STAR: { name: 'Star Collector', desc: 'Collect your first star', icon: 'star' },
+    COMBO_5: { name: 'Combo Master', desc: 'Get a 5x combo', icon: 'combo' },
+    PERFECT_10: { name: 'Perfect Runner', desc: '10 perfect jumps', icon: 'perfect' },
+    SURVIVOR: { name: 'Survivor', desc: 'Survive for 2 minutes', icon: 'survivor' },
+    RICH: { name: 'Coin Collector', desc: 'Collect 100 coins', icon: 'coin' },
+    SPEEDSTER: { name: 'Speed Demon', desc: 'Use dash 20 times', icon: 'speedster' }
 };
 
 // Canvas Setup
@@ -110,19 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupEventListeners() {
-    // Welcome Screen
+    // Welcome Screen - Only Beginner mode now
     document.getElementById('beginnerBtn').addEventListener('click', () => {
         if (validateUserInfo()) {
             gameState.difficulty = 'beginner';
-            gameSpeed = 2;
-            showCustomizationScreen();
-        }
-    });
-
-    document.getElementById('advancedBtn').addEventListener('click', () => {
-        if (validateUserInfo()) {
-            gameState.difficulty = 'advanced';
-            gameSpeed = 4;
+            gameSpeed = 2; // Beginner speed for everyone
             showCustomizationScreen();
         }
     });
@@ -148,6 +141,26 @@ function setupEventListeners() {
     // Set default selections
     document.querySelector('.character-option[data-character="astronaut"]').classList.add('selected');
     document.querySelector('.bg-option[data-bg="space"]').classList.add('selected');
+
+    // Navigation buttons
+    document.getElementById('nextToMusicBtn').addEventListener('click', showMusicSelectionScreen);
+    
+    // Music Selection
+    document.querySelectorAll('.music-option').forEach(option => {
+        option.addEventListener('click', (e) => {
+            document.querySelectorAll('.music-option').forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            gameState.selectedMusic = option.dataset.music;
+            
+            // Preview the selected music
+            if (typeof musicManager !== 'undefined') {
+                musicManager.previewSong(option.dataset.music);
+            }
+        });
+    });
+    
+    // Set default music selection
+    document.querySelector('.music-option[data-music="theme"]').classList.add('selected');
 
     document.getElementById('startGameBtn').addEventListener('click', startGame);
 
@@ -203,11 +216,47 @@ function showCustomizationScreen() {
     document.getElementById('customizationScreen').classList.add('active');
 }
 
+function showMusicSelectionScreen() {
+    document.getElementById('customizationScreen').classList.remove('active');
+    document.getElementById('musicSelectionScreen').classList.add('active');
+}
+
 function initializeCanvas() {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
+    
+    // Make canvas focusable and focus it
+    canvas.tabIndex = 1000;
+    canvas.focus();
+    
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+    
+    // Ensure canvas stays focused during gameplay
+    canvas.addEventListener('click', () => canvas.focus());
+    
+    // Add canvas-specific keyboard event listeners for better reliability
+    canvas.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') keys.ArrowLeft = true;
+        if (e.key === 'ArrowRight') keys.ArrowRight = true;
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            if (!keys.Space) {
+                keys.Space = true;
+                handleJump();
+            }
+        }
+        if (e.key === 'Shift' && player.dashCooldown <= 0) {
+            handleDash();
+        }
+        if (e.key === 'Escape') togglePause();
+    });
+
+    canvas.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowLeft') keys.ArrowLeft = false;
+        if (e.key === 'ArrowRight') keys.ArrowRight = false;
+        if (e.key === ' ' || e.key === 'Spacebar') keys.Space = false;
+    });
 }
 
 function resizeCanvas() {
@@ -226,14 +275,22 @@ function startGame() {
     const gameScreen = document.getElementById('gameScreen');
     gameScreen.className = 'screen active ' + gameState.selectedBackground + '-theme';
     
-    // Hide customization screen
-    document.getElementById('customizationScreen').classList.remove('active');
+    // Hide music selection screen
+    document.getElementById('musicSelectionScreen').classList.remove('active');
+    
+    // Start music based on selected music
+    if (typeof musicManager !== 'undefined') {
+        musicManager.playTheme(gameState.selectedMusic);
+    }
     
     // Reset game state
     resetGameState();
     
     // Generate initial obstacles and stars
     generateInitialObjects();
+    
+    // Focus canvas for keyboard input
+    canvas.focus();
     
     // Start game loop
     gameLoop();
@@ -907,7 +964,11 @@ function updateUI() {
     const livesContainer = document.getElementById('lives');
     livesContainer.innerHTML = '';
     for (let i = 0; i < gameState.lives; i++) {
-        livesContainer.innerHTML += '<span class="heart">❤️</span>';
+        const heartImg = document.createElement('img');
+        heartImg.className = 'heart';
+        heartImg.src = 'assets/characters/icon 5.jpg';
+        heartImg.alt = 'Life';
+        livesContainer.appendChild(heartImg);
     }
 }
 
@@ -915,36 +976,20 @@ function drawPlayer() {
     ctx.save();
     ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
     
-    // Draw character based on selection
-    switch(player.character) {
-        case 'astronaut':
-            ctx.font = '40px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('👨‍🚀', 0, 0);
-            break;
-        case 'robot':
-            ctx.font = '40px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🤖', 0, 0);
-            break;
-        case 'alien':
-            ctx.font = '40px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('👽', 0, 0);
-            break;
-        case 'explorer':
-            ctx.font = '40px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🧑‍🚀', 0, 0);
-            break;
-        default:
-            // Fallback rectangle
+    // Draw character based on selection using images
+    if (gameAssets && gameAssets.characters) {
+        const characterImg = gameAssets.characters[player.character];
+        if (characterImg && characterImg.complete) {
+            ctx.drawImage(characterImg, -player.width/2, -player.height/2, player.width, player.height);
+        } else {
+            // Fallback rectangle if image not loaded
             ctx.fillStyle = player.color;
             ctx.fillRect(-player.width/2, -player.height/2, player.width, player.height);
+        }
+    } else {
+        // Fallback rectangle if assets not loaded
+        ctx.fillStyle = player.color;
+        ctx.fillRect(-player.width/2, -player.height/2, player.width, player.height);
     }
     
     ctx.restore();
@@ -974,16 +1019,29 @@ function drawStars() {
         ctx.translate(star.x + star.width / 2, star.y + star.height / 2);
         ctx.rotate(star.rotation);
         
-        // Draw star emoji
-        ctx.font = '30px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('⭐', 0, 0);
-        
-        // Add glow effect
-        ctx.shadowColor = '#FFD700';
-        ctx.shadowBlur = 10;
-        ctx.fillText('⭐', 0, 0);
+        // Draw star using notepad image
+        if (gameAssets && gameAssets.collectibles && gameAssets.collectibles.star) {
+            const starImg = gameAssets.collectibles.star;
+            if (starImg.complete) {
+                // Add glow effect
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 15;
+                ctx.drawImage(starImg, -star.width/2, -star.height/2, star.width, star.height);
+            }
+        } else {
+            // Fallback star shape
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                const angle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+                const x = Math.cos(angle) * 15;
+                const y = Math.sin(angle) * 15;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
         
         ctx.restore();
     });
@@ -1339,11 +1397,22 @@ function drawCoins() {
         ctx.translate(coin.x + coin.width / 2, coin.y + coin.height / 2);
         ctx.rotate(Date.now() * 0.005);
         
-        // Draw coin
-        ctx.font = '25px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('🪙', 0, 0);
+        // Draw coin using coin image
+        if (gameAssets && gameAssets.collectibles && gameAssets.collectibles.coin) {
+            const coinImg = gameAssets.collectibles.coin;
+            if (coinImg.complete) {
+                ctx.drawImage(coinImg, -coin.width/2, -coin.height/2, coin.width, coin.height);
+            }
+        } else {
+            // Fallback coin circle
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.arc(0, 0, coin.width/2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#FFA500';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
         
         ctx.restore();
     });

@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechSplore 2-25 Simulation</title>
+    <title>TechSplore 2025 Hackathon</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Welcome Screen -->
     <div id="welcomeScreen" class="screen active">
         <div class="welcome-container">
-            <h1 class="game-title">Welcome to TechSplore 2-25 Simulation</h1>
+            <img src="assets/logo.jpg" alt="TechSplore Logo" class="game-logo">
+            <h1 class="game-title">Welcome to TechSplore 2025 Hackathon</h1>
             
             <div class="user-info">
                 <input type="text" id="playerName" placeholder="Enter your name" required>
@@ -18,10 +19,17 @@
                 <input type="number" id="teamNumber" placeholder="Enter team number" required>
             </div>
             
-            <div class="difficulty-buttons">
-                <button id="beginnerBtn" class="difficulty-btn">Beginner</button>
-                <button id="advancedBtn" class="difficulty-btn">Advanced</button>
+            <div class="instructions">
+                <h3>How to Play:</h3>
+                <p>📌 Use arrow keys (← →) to move your character</p>
+                <p>🎯 Press SPACE to jump (double tap for double jump)</p>
+                <p>💨 Press SHIFT to dash forward</p>
+                <p>⭐ Collect stars to answer tech questions</p>
+                <p>💰 Collect coins for extra points</p>
+                <p>❤️ Avoid obstacles or you'll lose lives!</p>
             </div>
+            
+            <button id="beginnerBtn" class="start-game-btn">Start Game for Beginners</button>
         </div>
     </div>
 
@@ -34,20 +42,40 @@
                 <h3>Choose Your Character</h3>
                 <div class="character-options">
                     <div class="character-option" data-character="astronaut">
-                        <div class="character-preview astronaut"></div>
-                        <span>Astronaut</span>
+                        <div class="character-preview astronaut">
+                            <img src="assets/characters/taylor.png" alt="Taylor">
+                        </div>
+                        <span>Taylor (USA) 🇺🇸</span>
                     </div>
                     <div class="character-option" data-character="robot">
-                        <div class="character-preview robot"></div>
-                        <span>Robot</span>
+                        <div class="character-preview robot">
+                            <img src="assets/characters/icon 2.jpg" alt="Character 2">
+                        </div>
+                        <span>Fairuz (Lebanon) 🇱🇧</span>
                     </div>
                     <div class="character-option" data-character="alien">
-                        <div class="character-preview alien"></div>
-                        <span>Alien</span>
+                        <div class="character-preview alien">
+                            <img src="assets/characters/icon 3.jpg" alt="Character 3">
+                        </div>
+                        <span>Olivia (Philippines) 🇵🇭</span>
                     </div>
                     <div class="character-option" data-character="explorer">
-                        <div class="character-preview explorer"></div>
-                        <span>Explorer</span>
+                        <div class="character-preview explorer">
+                            <img src="assets/characters/icon 4.jpg" alt="Character 4">
+                        </div>
+                        <span>Akira (Japan) 🇯🇵</span>
+                    </div>
+                    <div class="character-option" data-character="hellokitty">
+                        <div class="character-preview hellokitty">
+                            <img src="assets/characters/hellokityyyy.png" alt="Hello Kitty">
+                        </div>
+                        <span>Hello Kitty 🎀</span>
+                    </div>
+                    <div class="character-option" data-character="blondie">
+                        <div class="character-preview blondie">
+                            <img src="assets/characters/blondie.png" alt="Elsie">
+                        </div>
+                        <span>Elsie 👱‍♀️</span>
                     </div>
                 </div>
             </div>
@@ -70,6 +98,48 @@
                     <div class="bg-option" data-bg="cosmos">
                         <div class="bg-preview cosmos-bg"></div>
                         <span>Cosmos</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="nextToMusicBtn" class="start-btn">Next: Choose Music</button>
+        </div>
+    </div>
+
+    <!-- Music Selection Screen -->
+    <div id="musicSelectionScreen" class="screen">
+        <div class="customization-container">
+            <h2>Choose Your Background Music</h2>
+            <p>Select the soundtrack for your adventure!</p>
+            
+            <div class="customization-section">
+                <div class="music-options">
+                    <div class="music-option" data-music="taylor">
+                        <div class="music-preview">
+                            <span class="music-icon">🎵</span>
+                        </div>
+                        <div class="music-info">
+                            <span class="music-title">Taylor Swift</span>
+                            <span class="music-desc">Welcome to New York</span>
+                        </div>
+                    </div>
+                    <div class="music-option" data-music="olivia">
+                        <div class="music-preview">
+                            <span class="music-icon">🎸</span>
+                        </div>
+                        <div class="music-info">
+                            <span class="music-title">Olivia Rodrigo</span>
+                            <span class="music-desc">Teenage Dream</span>
+                        </div>
+                    </div>
+                    <div class="music-option" data-music="theme">
+                        <div class="music-preview">
+                            <span class="music-icon">🎼</span>
+                        </div>
+                        <div class="music-info">
+                            <span class="music-title">Gilmore Girls</span>
+                            <span class="music-desc">Classic Theme</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,9 +167,9 @@
                 <div class="stat-item">
                     <span class="stat-label">Lives:</span>
                     <div id="lives" class="lives-container">
-                        <span class="heart">❤️</span>
-                        <span class="heart">❤️</span>
-                        <span class="heart">❤️</span>
+                        <img class="heart" src="assets/characters/icon 5.jpg" alt="Life">
+                        <img class="heart" src="assets/characters/icon 5.jpg" alt="Life">
+                        <img class="heart" src="assets/characters/icon 5.jpg" alt="Life">
                     </div>
                 </div>
                 <div class="stat-item">
@@ -148,6 +218,9 @@
         </div>
     </div>
 
+    <script src="assetConfig.js"></script>
+    <script src="musicManager.js"></script>
+    <script src="customQuestions.js"></script>
     <script src="questions.js"></script>
     <script src="game.js"></script>
 </body>

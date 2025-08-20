@@ -59,6 +59,14 @@ body {
     }
 }
 
+.game-logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
 .game-title {
     font-size: 2.5em;
     color: #2a5298;
@@ -94,16 +102,31 @@ body {
     box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
 }
 
-.difficulty-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 30px;
+.instructions {
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
 }
 
-.difficulty-btn {
-    padding: 15px 40px;
-    font-size: 18px;
+.instructions h3 {
+    color: #2a5298;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.instructions p {
+    margin: 10px 0;
+    color: #333;
+    font-size: 1em;
+    padding-left: 10px;
+}
+
+.start-game-btn {
+    padding: 18px 50px;
+    font-size: 20px;
     font-weight: bold;
     border: none;
     border-radius: 50px;
@@ -111,29 +134,23 @@ body {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-
-#beginnerBtn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    margin-top: 20px;
+    width: 80%;
 }
 
-#advancedBtn {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-}
-
-.difficulty-btn:hover {
+.start-game-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.difficulty-btn:active {
+.start-game-btn:active {
     transform: translateY(0);
 }
 
 /* Customization Screen */
-#customizationScreen {
+#customizationScreen, #musicSelectionScreen {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -146,6 +163,7 @@ body {
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
+    text-align: center;
 }
 
 .customization-section {
@@ -195,111 +213,42 @@ body {
 }
 
 /* Character Previews */
-.character-preview.astronaut {
+.character-preview {
     background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
     position: relative;
 }
 
-.character-preview.astronaut::before {
-    content: "👨‍🚀";
-    font-size: 50px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.character-preview.robot {
-    background: linear-gradient(135deg, #636363 0%, #a2a2a2 100%);
-}
-
-.character-preview.robot::before {
-    content: "🤖";
-    font-size: 50px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.character-preview.alien {
-    background: linear-gradient(135deg, #00c851 0%, #00ff00 100%);
-}
-
-.character-preview.alien::before {
-    content: "👽";
-    font-size: 50px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.character-preview.explorer {
-    background: linear-gradient(135deg, #ff6f00 0%, #ffb300 100%);
-}
-
-.character-preview.explorer::before {
-    content: "🧑‍🚀";
-    font-size: 50px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.character-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 /* Background Previews */
 .bg-preview.space-bg {
-    background: radial-gradient(ellipse at center, #0f1419 0%, #000000 100%);
+    background-image: url('assets/backgrounds/bggame.jpg');
+    background-size: cover;
+    background-position: center;
     position: relative;
 }
 
-.bg-preview.space-bg::before {
-    content: "⭐ ✨ 🌟";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-}
-
 .bg-preview.galaxy-bg {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-}
-
-.bg-preview.galaxy-bg::before {
-    content: "🌌";
-    font-size: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-image: url('assets/backgrounds/Purple and Pink Pixel Retro Nostalgia Fever Fandom Game Presentation.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .bg-preview.nebula-bg {
-    background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
-}
-
-.bg-preview.nebula-bg::before {
-    content: "☁️";
-    font-size: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-image: url('assets/backgrounds/Purple and Pink Pixel Retro Nostalgia Fever Fandom Game Presentation (1).jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .bg-preview.cosmos-bg {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-}
-
-.bg-preview.cosmos-bg::before {
-    content: "🌠";
-    font-size: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-image: url('assets/backgrounds/Purple and Pink Pixel Retro Nostalgia Fever Fandom Game Presentation (2).jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .start-btn {
@@ -329,19 +278,31 @@ body {
 }
 
 #gameScreen.space-theme {
-    background: radial-gradient(ellipse at center, #0f1419 0%, #000000 100%);
+    background-image: url('assets/backgrounds/bggame.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 #gameScreen.galaxy-theme {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background-image: url('assets/backgrounds/Purple and Pink Pixel Retro Nostalgia Fever Fandom Game Presentation.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 #gameScreen.nebula-theme {
-    background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+    background-image: url('assets/backgrounds/Purple and Pink Pixel Retro Nostalgia Fever Fandom Game Presentation (1).jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 #gameScreen.cosmos-theme {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background-image: url('assets/backgrounds/Purple and Pink Pixel Retro Nostalgia Fever Fandom Game Presentation (2).jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .game-ui {
@@ -390,7 +351,9 @@ body {
 }
 
 .heart {
-    font-size: 20px;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
     animation: heartbeat 1.5s ease-in-out infinite;
 }
 
@@ -766,4 +729,181 @@ body {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
+}
+
+/* Music Selection Screen */
+.music-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 30px 0;
+    max-width: 100%;
+}
+
+.music-option {
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid transparent;
+    border-radius: 20px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 180px;
+    max-width: 200px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.music-option:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 1);
+}
+
+.music-option.selected {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.15);
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+}
+
+.music-option.selected::before {
+    content: "✓";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #667eea;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    animation: checkmark 0.3s ease;
+}
+
+@keyframes checkmark {
+    from {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.music-preview {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.music-preview::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.music-icon {
+    font-size: 35px;
+    z-index: 1;
+    position: relative;
+    animation: musicPulse 2s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.music-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.music-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2a5298;
+    margin-bottom: 5px;
+}
+
+.music-desc {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Center all buttons properly */
+.customization-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.customization-container p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.character-options, .background-options, .music-options {
+    justify-content: center;
+}
+
+/* Improve responsive design for music selection */
+@media (max-width: 768px) {
+    .music-options {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .music-option {
+        min-width: 250px;
+        max-width: 280px;
+    }
+    
+    .character-options, .background-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .music-options {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .character-options, .background-options {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .music-option {
+        min-width: 200px;
+        max-width: 220px;
+    }
 }
