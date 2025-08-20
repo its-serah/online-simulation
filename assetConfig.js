@@ -8,6 +8,7 @@ const ASSET_CONFIG = {
         explorer: 'assets/characters/icon 4.jpg',
         hellokitty: 'assets/characters/hellokityyyy.png',
         blondie: 'assets/characters/blondie.png',
+        rory: 'assets/characters/rory.png',
         // Additional characters
         character5: 'assets/characters/icon 5.jpg',
         character6: 'assets/characters/icon 6.jpg',
