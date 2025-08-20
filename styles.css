@@ -41,10 +41,13 @@ body {
 .welcome-container {
     text-align: center;
     background: rgba(255, 255, 255, 0.95);
-    padding: 50px;
+    padding: 20px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    max-width: 600px;
+    max-width: 90vw;
+    max-height: 95vh;
+    width: 600px;
+    overflow-y: auto;
     animation: slideIn 0.8s ease-out;
 }
 
@@ -60,17 +63,17 @@ body {
 }
 
 .game-logo {
-    width: 150px;
+    width: 120px;
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .game-title {
-    font-size: 2.5em;
+    font-size: 2em;
     color: #2a5298;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     animation: pulse 2s ease-in-out infinite;
 }
@@ -81,14 +84,14 @@ body {
 }
 
 .user-info {
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .user-info input {
     display: block;
     width: 100%;
-    padding: 15px;
-    margin: 10px 0;
+    padding: 12px;
+    margin: 8px 0;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     font-size: 16px;
@@ -105,22 +108,22 @@ body {
 .instructions {
     background: rgba(102, 126, 234, 0.1);
     border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 15px;
+    margin: 15px 0;
     text-align: left;
 }
 
 .instructions h3 {
     color: #2a5298;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .instructions p {
-    margin: 10px 0;
+    margin: 6px 0;
     color: #333;
-    font-size: 1em;
+    font-size: 0.95em;
     padding-left: 10px;
 }
 
